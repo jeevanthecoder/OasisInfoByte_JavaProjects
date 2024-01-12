@@ -8,6 +8,7 @@ import com.example.adminservice.service.AdminService;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +37,7 @@ public class AuthorizationController {
     @Autowired
     private AdminService adminService;
 
-    @PostMapping("/login-admin")
+    @RequestMapping(value = "/login-admin",method = {RequestMethod.POST,RequestMethod.GET})
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 
         this.doAuthenticate(request.getAdminEmail(), request.getAdminPassword());
@@ -47,7 +48,7 @@ public class AuthorizationController {
 
         JwtResponse response = JwtResponse.builder()
                 .jwtToken(token)
-                .Admin_name(userDetails.getUsername()).build();
+                .Admin_Email(userDetails.getUsername()).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -1,5 +1,6 @@
 package com.example.adminservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jdk.jfr.Name;
@@ -7,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table(name = "ADMIN")
@@ -35,6 +38,19 @@ public class AdminAccess implements UserDetails {
     @Column(unique = true)
     @Name("Organization")
     public String Organization;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<TrainDetails> trainDetails;
+
+    public Set<TrainDetails> getTrainDetails() {
+        return trainDetails;
+    }
+
+    public AdminAccess setTrainDetails(Set<TrainDetails> trainDetails) {
+        this.trainDetails = trainDetails;
+        return this;
+    }
 
     public String getOrganization() {
         return Organization;

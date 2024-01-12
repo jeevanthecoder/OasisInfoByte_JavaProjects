@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,14 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //Bearer 2352345235sdfrsfgsdfsdf
 
         logger.info(()-> " Header : {}"+requestHeader);
-        String Admin_name = null;
+        String Admin_Email = null;
         String token = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer")) {
             //looking good
             token = requestHeader.substring(7);
             try {
 
-                Admin_name = this.jwtHelper.getUsernameFromToken(token);
+                Admin_Email = this.jwtHelper.getUsernameFromToken(token);
 
             } catch (IllegalArgumentException e) {
                 logger.info(()->"Illegal Argument while fetching the username !!");
@@ -74,11 +75,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
         //
-        if (Admin_name != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (Admin_Email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             System.out.println("Fetching user name!!");
 
             //fetch user detail from username
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(Admin_name);
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(Admin_Email);
             Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
             if (validateToken) {
 

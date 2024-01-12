@@ -10,5 +10,5 @@ import lombok.*;
 @Builder
 public class JwtResponse {
     private String jwtToken;
-    private String Admin_name;
+    private String Admin_Email;
 }

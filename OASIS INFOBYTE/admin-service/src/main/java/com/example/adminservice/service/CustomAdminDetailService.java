@@ -16,7 +16,10 @@ public class CustomAdminDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        AdminAccess adminAccess = adminRepository.findAdminByAdminEmail(email).orElseThrow(()->new RuntimeException("Admin not found!!!"));
+        AdminAccess adminAccess = adminRepository.findAdminAccessByAdminName(email);
+        if(adminAccess==null){
+            new RuntimeException("Admin not found!!!");
+        }
         return adminAccess;
     }
 }
