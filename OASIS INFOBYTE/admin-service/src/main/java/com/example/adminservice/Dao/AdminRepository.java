@@ -10,4 +10,5 @@ public interface AdminRepository extends JpaRepository<AdminAccess,Integer> {
 
     public AdminAccess findAdminAccessByAdminName(final String adminEmail);
 
+
 }

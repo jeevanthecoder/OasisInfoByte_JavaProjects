@@ -22,7 +22,7 @@ public class TrainDetails {
     public int t_Id;
 
     @Column(unique = true)
-    public String TrainNumber;
+    public String trainNumber;
 
     @Column(unique = true)
     public String trainName;
@@ -39,7 +39,7 @@ public class TrainDetails {
     private AdminAccess adminAccess;
 
     public TrainDetails(String trainNumber, String trainName, String classType, String source, String dest, Date dateOfJourney,AdminAccess adminAccess) {
-        TrainNumber = trainNumber;
+        this.trainNumber = trainNumber;
         this.trainName = trainName;
         ClassType = classType;
         Source = source;

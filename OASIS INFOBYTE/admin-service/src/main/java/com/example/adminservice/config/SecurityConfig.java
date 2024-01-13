@@ -36,6 +36,7 @@ public class SecurityConfig {
                 requestMatchers("/test").authenticated()
                 .requestMatchers("/auth/login-admin").permitAll()
                 .requestMatchers("/auth/create-admin").permitAll()
+                .requestMatchers("/admin/get-train/{trainNumber}").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(point))

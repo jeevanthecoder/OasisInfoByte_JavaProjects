@@ -51,12 +51,33 @@ adminAccess.getTrainDetails().add(trainDetails);
         return trainRepository.findAll();
     }
 
+    @GetMapping("/get-train/{trainNumber}")
+    public ResponseEntity<TrainDetails> getTrainByTrainNumber(@PathVariable("trainNumber")String trainNumber){
+        TrainDetails trainDetails = this.trainRepository.findTrainDetailsByTrainNumber(trainNumber);
+        if(trainDetails==null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            return ResponseEntity.ok(trainDetails);
+        }
+
+    }
+
     @PutMapping("/update-TrainDetails/{trainName}")
     public ResponseEntity<Void> updateTrainDetails(@RequestBody TrainDetails trainDetails,@PathVariable("trainName") String trainName){
         if(trainDetails==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }else {
             this.trainService.updateTrainDetails(trainDetails, trainName);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+    }
+
+    @RequestMapping(value = "/delete-TrainDetails/{trainName}",method = {RequestMethod.DELETE,RequestMethod.GET})
+    public ResponseEntity<Void> deleteTrainDetails(@PathVariable("trainName")String trainName){
+        if(trainName==null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else{
+            this.trainService.deleteTrainDetails(trainName);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
     }
